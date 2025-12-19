@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil de EfreiTech{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4">Bienvenue chez Efreitech</h1>
+        <p class="text-xl text-gray-600 mb-8">Votre boutique de matériel et d'outils informatique</p>
+        <a href="{{ path('app_produit_index') }}" class="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700">
+            Voir nos produits
+        </a>
+    </div>
+{% endblock %}
