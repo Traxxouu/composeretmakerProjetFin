@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/produit')]
 final class ProduitController extends AbstractController
@@ -22,6 +23,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -30,9 +32,11 @@ final class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $produit->setAuteur($this->getUser());
             $entityManager->persist($produit);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Produit créé avec succès !');
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -50,15 +54,23 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
+        // Vérifier que l'utilisateur est l'auteur
+        if ($produit->getAuteur() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez modifier que vos propres produits.');
+            return $this->redirectToRoute('app_produit_index');
+        }
+
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Produit modifié avec succès !');
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -68,12 +80,20 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
+        // Vérifier que l'utilisateur est l'auteur
+        if ($produit->getAuteur() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez supprimer que vos propres produits.');
+            return $this->redirectToRoute('app_produit_index');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($produit);
             $entityManager->flush();
+            $this->addFlash('success', 'Produit supprimé !');
         }
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
