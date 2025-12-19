@@ -1,19 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription - EfreiTech{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="max-w-md mx-auto">
+    <div class="content-container">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Créer un compte</h1>
+            <p class="text-gray-600">Rejoignez EfreiTech en quelques instants</p>
+        </div>
 
-    {{ form_errors(registrationForm) }}
+        {% if form_errors(registrationForm) %}
+            <div class="flash-message flash-error">
+                {{ form_errors(registrationForm) }}
+            </div>
+        {% endif %}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_start(registrationForm) }}
+            <div class="mb-6">
+                {{ form_label(registrationForm.email, 'Adresse email', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-input', 'placeholder': 'votre@email.com'}}) }}
+                {{ form_errors(registrationForm.email) }}
+            </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <div class="mb-6">
+                {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-input', 'placeholder': 'Minimum 8 caractères'}}) }}
+                {{ form_errors(registrationForm.plainPassword) }}
+                <p class="text-sm text-gray-500 mt-1">Le mot de passe doit contenir au moins 8 caractères</p>
+            </div>
+
+            <div class="mb-6">
+                <label class="flex items-start gap-2 cursor-pointer">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-1'}}) }}
+                    <span class="text-gray-700 text-sm">
+                        J'accepte les <a href="{{ path('app_cgu') }}" class="text-blue-600 hover:text-blue-800 font-semibold">conditions générales d'utilisation</a>
+                    </span>
+                </label>
+                {{ form_errors(registrationForm.agreeTerms) }}
+            </div>
+
+            <button type="submit" class="btn-primary w-full text-lg mb-4">
+                Créer mon compte
+            </button>
+
+            <div class="text-center">
+                <p class="text-gray-600">
+                    Déjà un compte ? 
+                    <a href="{{ path('app_login') }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                        Se connecter
+                    </a>
+                </p>
+            </div>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
 {% endblock %}

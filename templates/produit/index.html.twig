@@ -1,43 +1,86 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit index{% endblock %}
+{% block title %}Nos Produits - EfreiTech{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
+    <div class="mb-8">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-4xl font-bold text-white mb-2" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.8);">Nos Produits</h1>
+                <p class="text-gray-200">Découvrez notre sélection de matériel informatique professionnel</p>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_produit_new') }}" class="btn-primary">
+                    Ajouter un produit
+                </a>
+            {% endif %}
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.stock }}</td>
-                <td>{{ produit.image }}</td>
-                <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
+        {% if produits is empty %}
+            <div class="content-container text-center py-12">
+                <h3 class="text-2xl font-bold text-black mb-2">Aucun produit disponible</h3>
+                <p class="text-gray-700">Revenez bientôt pour découvrir nos nouveautés !</p>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_produit_new') }}">Create new</a>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for produit in produits %}
+                    <div class="product-card animate-fadeIn" style="animation-delay: {{ loop.index * 0.05 }}s">
+                        <div class="relative overflow-hidden bg-gray-200" style="height: 250px;">
+                            {% if produit.image %}
+                                <img src="{{ produit.image }}" alt="{{ produit.nom }}" class="w-full h-full object-cover">
+                            {% else %}
+                                <div class="flex items-center justify-center h-full bg-gray-300">
+                                    <span class="text-gray-500 font-bold">Pas d'image</span>
+                                </div>
+                            {% endif %}
+                            
+                            {% if produit.stock <= 0 %}
+                                <div class="absolute top-4 right-4 badge badge-danger">
+                                    Rupture de stock
+                                </div>
+                            {% elseif produit.stock < 10 %}
+                                <div class="absolute top-4 right-4 badge badge-warning">
+                                    Stock limité
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 truncate">
+                                {{ produit.nom }}
+                            </h3>
+                            
+                            <p class="text-gray-600 mb-4 line-clamp-2" style="min-height: 48px;">
+                                {{ produit.description|length > 100 ? produit.description|slice(0, 100) ~ '...' : produit.description }}
+                            </p>
+                            
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <span class="text-3xl font-bold text-black">
+                                        {{ produit.prix|number_format(2, ',', ' ') }}€
+                                    </span>
+                                </div>
+                                <div class="text-sm text-gray-700">
+                                    Stock: <span class="font-semibold text-black">
+                                        {{ produit.stock }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <a href="{{ path('app_produit_show', {'id': produit.id}) }}" style="flex: 1; text-align: center; background: #252525; color: #fafafa; padding: 10px 16px; border-radius: 8px; border: 2px solid #252525; font-weight: 600; box-shadow: 2px 2px #252525; text-decoration: none;">
+                                    Voir
+                                </a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" style="flex: 1; text-align: center; background: #fafafa; color: #252525; padding: 10px 16px; border-radius: 8px; border: 2px solid #252525; font-weight: 600; box-shadow: 2px 2px #252525; text-decoration: none;">
+                                        Modifier
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

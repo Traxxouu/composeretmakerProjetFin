@@ -3,37 +3,100 @@
 {% block title %}Contact - EfreiTech{% endblock %}
 
 {% block body %}
-    <div class="max-w-2xl mx-auto">
-        <h1 class="text-3xl font-bold mb-6">Nous contacter</h1>
-        
-        {{ form_start(contactForm, {'attr': {'class': 'bg-white p-6 rounded-lg shadow'}}) }}
-            <div class="mb-4">
-                {{ form_label(contactForm.nom, 'Nom', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
-                {{ form_widget(contactForm.nom, {'attr': {'class': 'w-full border rounded p-2'}}) }}
-                {{ form_errors(contactForm.nom) }}
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Formulaire de contact -->
+        <div class="content-container">
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Contactez-nous</h1>
+                <p class="text-gray-600">Une question ? Besoin d'aide ? Notre équipe est là pour vous répondre !</p>
             </div>
             
-            <div class="mb-4">
-                {{ form_label(contactForm.email, 'Email', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
-                {{ form_widget(contactForm.email, {'attr': {'class': 'w-full border rounded p-2'}}) }}
-                {{ form_errors(contactForm.email) }}
+            {{ form_start(contactForm) }}
+                <div class="mb-6">
+                    {{ form_label(contactForm.nom, 'Nom complet', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                    {{ form_widget(contactForm.nom, {'attr': {'class': 'form-input', 'placeholder': 'Votre nom'}}) }}
+                    {{ form_errors(contactForm.nom) }}
+                </div>
+                
+                <div class="mb-6">
+                    {{ form_label(contactForm.email, 'Adresse email', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                    {{ form_widget(contactForm.email, {'attr': {'class': 'form-input', 'placeholder': 'votre@email.com'}}) }}
+                    {{ form_errors(contactForm.email) }}
+                </div>
+                
+                <div class="mb-6">
+                    {{ form_label(contactForm.sujet, 'Sujet', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                    {{ form_widget(contactForm.sujet, {'attr': {'class': 'form-input', 'placeholder': 'Comment pouvons-nous vous aider ?'}}) }}
+                    {{ form_errors(contactForm.sujet) }}
+                </div>
+                
+                <div class="mb-6">
+                    {{ form_label(contactForm.message, 'Message', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                    {{ form_widget(contactForm.message, {'attr': {'class': 'form-input', 'rows': '6', 'placeholder': 'Décrivez votre demande en détail...'}}) }}
+                    {{ form_errors(contactForm.message) }}
+                </div>
+                
+                <button type="submit" class="btn-primary w-full text-lg">
+                    Envoyer le message
+                </button>
+            {{ form_end(contactForm) }}
+        </div>
+
+        <!-- Informations de contact -->
+        <div>
+            <div class="content-container mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Nos coordonnées</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <div>
+                            <h3 class="font-bold text-gray-800">Adresse</h3>
+                            <p class="text-gray-600">
+                                10 Avenue de la Tech<br>
+                                94800 Villejuif<br>
+                                France
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div>
+                            <h3 class="font-bold text-gray-800">Téléphone</h3>
+                            <p class="text-gray-600">+33 1 23 45 67 89</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div>
+                            <h3 class="font-bold text-gray-800">Email</h3>
+                            <p class="text-gray-600">mael.barbe@efrei.net</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div>
+                            <h3 class="font-bold text-gray-800">Horaires d'ouverture</h3>
+                            <p class="text-gray-600">
+                                Lundi - Vendredi: 9h00 - 18h00<br>
+                                Samedi: 10h00 - 16h00<br>
+                                Dimanche: Fermé
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="mb-4">
-                {{ form_label(contactForm.sujet, 'Sujet', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
-                {{ form_widget(contactForm.sujet, {'attr': {'class': 'w-full border rounded p-2'}}) }}
-                {{ form_errors(contactForm.sujet) }}
+
+            <div class="content-container" style="background: rgba(59, 130, 246, 0.1);">
+                <h3 class="text-xl font-bold mb-3" style="color: #fafafa;">Réponse rapide garantie</h3>
+                <p class="mb-4" style="color: #fafafa;">
+                    Notre équipe s'engage à vous répondre dans les 24 heures ouvrées. 
+                    Pour toute urgence, n'hésitez pas à nous appeler directement.
+                </p>
+                <div class="flex gap-2">
+                    <span class="badge badge-success">Support réactif</span>
+                    <span class="badge" style="background: #3b82f6; color: white;">Conseils personnalisés</span>
+                </div>
             </div>
-            
-            <div class="mb-4">
-                {{ form_label(contactForm.message, 'Message', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
-                {{ form_widget(contactForm.message, {'attr': {'class': 'w-full border rounded p-2', 'rows': '5'}}) }}
-                {{ form_errors(contactForm.message) }}
-            </div>
-            
-            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-                Envoyer
-            </button>
-        {{ form_end(contactForm) }}
+        </div>
     </div>
 {% endblock %}

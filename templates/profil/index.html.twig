@@ -3,27 +3,78 @@
 {% block title %}Mon Profil - EfreiTech{% endblock %}
 
 {% block body %}
-    <div class="max-w-2xl mx-auto">
-        <h1 class="text-3xl font-bold mb-6">Mon Profil</h1>
-        
-        <div class="bg-white p-6 rounded-lg shadow mb-6">
-            <p class="mb-2"><strong>Email :</strong> {{ user.email }}</p>
-            <p class="mb-4"><strong>Rôles :</strong> {{ user.roles|join(', ') }}</p>
-            
-            <div class="flex gap-4">
-                <a href="{{ path('app_profil_edit') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Modifier mon profil
-                </a>
+    <div class="max-w-3xl mx-auto">
+        <div class="content-container mb-8">
+            <div class="flex items-start gap-6">
+                <div class="bg-blue-600 rounded-full w-24 h-24 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
+                    {{ user.email|first|upper }}
+                </div>
+                
+                <div class="flex-1">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Mon Profil</h1>
+                    <p class="text-gray-600 mb-4">Gérez vos informations personnelles et votre compte</p>
+                    
+                    <div class="flex gap-3">
+                        <a href="{{ path('app_profil_edit') }}" class="btn-primary">
+                            Modifier mon profil
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
-            <h2 class="text-xl font-bold text-red-600 mb-4">Zone dangereuse</h2>
-            <p class="mb-4 text-gray-600">Attention, cette action est irréversible !</p>
-            <form method="post" action="{{ path('app_profil_delete') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
+
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="content-container">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">
+                    Informations de compte
+                </h2>
+                
+                <div class="space-y-3">
+                    <div>
+                        <p class="text-sm text-gray-600">Adresse email</p>
+                        <p class="font-semibold text-gray-800">{{ user.email }}</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm text-gray-600">Statut du compte</p>
+                        <span class="badge badge-success">Actif</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-container">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">
+                    Rôles et permissions
+                </h2>
+                
+                <div class="flex flex-wrap gap-2">
+                    {% for role in user.roles %}
+                        <span class="badge" style="background: #3b82f6; color: white;">
+                            {% if role == 'ROLE_ADMIN' %}
+                                Administrateur
+                            {% elseif role == 'ROLE_USER' %}
+                                Utilisateur
+                            {% else %}
+                                {{ role }}
+                            {% endif %}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container" style="background: rgba(239, 68, 68, 0.05); border: 2px solid rgba(239, 68, 68, 0.2);">
+            <h2 class="text-xl font-bold text-red-600 mb-3">
+                Zone de danger
+            </h2>
+            <p class="text-gray-700 mb-4">
+                La suppression de votre compte est <strong>définitive et irréversible</strong>. 
+                Toutes vos données seront perdues.
+            </p>
+            <form method="post" action="{{ path('app_profil_delete') }}" onsubmit="return confirm('ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action est IRRÉVERSIBLE.');">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete-account') }}">
-                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-                    Supprimer mon compte
+                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+                    Supprimer définitivement mon compte
                 </button>
             </form>
         </div>

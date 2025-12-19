@@ -1,13 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil de EfreiTech{% endblock %}
+{% block title %}Accueil - EfreiTech{% endblock %}
 
 {% block body %}
-    <div class="text-center">
-        <h1 class="text-4xl font-bold mb-4">Bienvenue chez Efreitech</h1>
-        <p class="text-xl text-gray-600 mb-8">Votre boutique de matériel et d'outils informatique</p>
-        <a href="{{ path('app_produit_index') }}" class="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700">
-            Voir nos produits
+    <!-- Hero Section -->
+    <div class="hero-section animate-fadeIn">
+        <h1 class="hero-title">
+            Bienvenue chez EfreiTech
+        </h1>
+        <p class="hero-subtitle">
+            Votre boutique de confiance pour tout le matériel informatique professionnel
+        </p>
+        <div class="flex justify-center gap-4 flex-wrap">
+            <a href="{{ path('app_produit_index') }}" class="btn-primary text-lg">
+                Découvrir nos produits
+            </a>
+            <a href="{{ path('app_contact') }}" class="btn-secondary text-lg bg-white">
+                Nous contacter
+            </a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="content-container text-center animate-fadeIn" style="animation-delay: 0.1s">
+            <h3 class="text-xl font-bold mb-2 text-black">Livraison rapide</h3>
+            <p class="text-gray-800">
+                Recevez vos commandes en 24-48h partout en France
+            </p>
+        </div>
+        
+        <div class="content-container text-center animate-fadeIn" style="animation-delay: 0.2s">
+            <h3 class="text-xl font-bold mb-2 text-black">Paiement sécurisé</h3>
+            <p class="text-gray-800">
+                Vos transactions sont protégées et cryptées
+            </p>
+        </div>
+        
+        <div class="content-container text-center animate-fadeIn" style="animation-delay: 0.3s">
+            <h3 class="text-xl font-bold mb-2 text-black">Qualité garantie</h3>
+            <p class="text-gray-800">
+                Des produits testés et certifiés professionnels
+            </p>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="content-container text-center" style="background: #252525; border-color: #fafafa; box-shadow: 5px 5px #fafafa;">
+        <h2 class="text-3xl font-bold mb-4 text-white">
+            Prêt à équiper votre entreprise ?
+        </h2>
+        <p class="text-lg text-white mb-6">
+            Découvrez notre catalogue complet de matériel informatique professionnel
+        </p>
+        <a href="{{ path('app_produit_index') }}" class="btn-secondary text-lg inline-block">
+            Voir tous les produits
         </a>
     </div>
 {% endblock %}

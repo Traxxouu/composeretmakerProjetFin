@@ -1,4 +1,47 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="space-y-6">
+        <div>
+            {{ form_label(form.nom, 'Nom du produit', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-input', 'placeholder': 'Ex: Clavier mécanique RGB'}}) }}
+            {{ form_errors(form.nom) }}
+        </div>
+
+        <div>
+            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-input', 'rows': '4', 'placeholder': 'Décrivez le produit en détail...'}}) }}
+            {{ form_errors(form.description) }}
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <div>
+                {{ form_label(form.prix, 'Prix (€)', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                {{ form_widget(form.prix, {'attr': {'class': 'form-input', 'placeholder': '99.99'}}) }}
+                {{ form_errors(form.prix) }}
+            </div>
+
+            <div>
+                {{ form_label(form.stock, 'Stock', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+                {{ form_widget(form.stock, {'attr': {'class': 'form-input', 'placeholder': '50'}}) }}
+                {{ form_errors(form.stock) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_label(form.image, 'URL de l\'image', {'label_attr': {'class': 'block font-semibold text-gray-700 mb-2'}}) }}
+            {{ form_widget(form.image, {'attr': {'class': 'form-input', 'placeholder': 'https://exemple.com/image.jpg'}}) }}
+            {{ form_errors(form.image) }}
+            <p class="text-sm text-gray-500 mt-1">Entrez l'URL complète de l'image du produit</p>
+        </div>
+
+        {{ form_rest(form) }}
+
+        <div class="flex gap-3 pt-4">
+            <button type="submit" class="btn-primary flex-1 text-lg">
+                {{ button_label|default('Enregistrer') }}
+            </button>
+            <a href="{{ path('app_produit_index') }}" class="btn-secondary flex-1 text-center text-lg">
+                Annuler
+            </a>
+        </div>
+    </div>
 {{ form_end(form) }}
