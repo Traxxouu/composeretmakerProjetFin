@@ -31,7 +31,7 @@ class Produit
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $auteur = null;
+    private ?User $auteur = null;
 
     public function getId(): ?int
     {
@@ -46,7 +46,6 @@ class Produit
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -58,7 +57,6 @@ class Produit
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -70,7 +68,6 @@ class Produit
     public function setPrix(float $prix): static
     {
         $this->prix = $prix;
-
         return $this;
     }
 
@@ -82,7 +79,6 @@ class Produit
     public function setStock(int $stock): static
     {
         $this->stock = $stock;
-
         return $this;
     }
 
@@ -94,19 +90,17 @@ class Produit
     public function setImage(?string $image): static
     {
         $this->image = $image;
-
         return $this;
     }
 
-    public function getAuteur(): ?user
+    public function getAuteur(): ?User
     {
         return $this->auteur;
     }
 
-    public function setAuteur(?user $auteur): static
+    public function setAuteur(?User $auteur): static
     {
         $this->auteur = $auteur;
-
         return $this;
     }
 }

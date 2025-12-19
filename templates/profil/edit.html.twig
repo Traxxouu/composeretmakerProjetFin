@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil - EfreiTech{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Modifier mon profil</h1>
+        
+        <form method="post" class="bg-white p-6 rounded-lg shadow">
+            <div class="mb-4">
+                <label for="email" class="block font-bold mb-2">Email</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" class="w-full border rounded p-2">
+            </div>
+            
+            <div class="mb-4">
+                <label for="password" class="block font-bold mb-2">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+                <input type="password" id="password" name="password" class="w-full border rounded p-2">
+            </div>
+            
+            <div class="flex gap-4">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                    Enregistrer
+                </button>
+                <a href="{{ path('app_profil') }}" class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - EfreiTech{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Nous contacter</h1>
+        
+        {{ form_start(contactForm, {'attr': {'class': 'bg-white p-6 rounded-lg shadow'}}) }}
+            <div class="mb-4">
+                {{ form_label(contactForm.nom, 'Nom', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
+                {{ form_widget(contactForm.nom, {'attr': {'class': 'w-full border rounded p-2'}}) }}
+                {{ form_errors(contactForm.nom) }}
+            </div>
+            
+            <div class="mb-4">
+                {{ form_label(contactForm.email, 'Email', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
+                {{ form_widget(contactForm.email, {'attr': {'class': 'w-full border rounded p-2'}}) }}
+                {{ form_errors(contactForm.email) }}
+            </div>
+            
+            <div class="mb-4">
+                {{ form_label(contactForm.sujet, 'Sujet', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
+                {{ form_widget(contactForm.sujet, {'attr': {'class': 'w-full border rounded p-2'}}) }}
+                {{ form_errors(contactForm.sujet) }}
+            </div>
+            
+            <div class="mb-4">
+                {{ form_label(contactForm.message, 'Message', {'label_attr': {'class': 'block font-bold mb-2'}}) }}
+                {{ form_widget(contactForm.message, {'attr': {'class': 'w-full border rounded p-2', 'rows': '5'}}) }}
+                {{ form_errors(contactForm.message) }}
+            </div>
+            
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                Envoyer
+            </button>
+        {{ form_end(contactForm) }}
+    </div>
+{% endblock %}

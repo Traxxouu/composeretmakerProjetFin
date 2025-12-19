@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil - EfreiTech{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Mon Profil</h1>
+        
+        <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <p class="mb-2"><strong>Email :</strong> {{ user.email }}</p>
+            <p class="mb-4"><strong>Rôles :</strong> {{ user.roles|join(', ') }}</p>
+            
+            <div class="flex gap-4">
+                <a href="{{ path('app_profil_edit') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Modifier mon profil
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+            <h2 class="text-xl font-bold text-red-600 mb-4">Zone dangereuse</h2>
+            <p class="mb-4 text-gray-600">Attention, cette action est irréversible !</p>
+            <form method="post" action="{{ path('app_profil_delete') }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete-account') }}">
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                    Supprimer mon compte
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
